@@ -9,7 +9,7 @@ int camera_read () {
 	take_picture();
 	int min = 256;
 	int max = 0;
-	int[] pixels = [];
+	int pixels[320];
 	for (int i = 0; i < 320; i++){
 		int pixel = get_pixel(i, 120, 3);
 		pixels[i] = pixel;
@@ -33,7 +33,21 @@ int camera_read () {
 		blackValue = 235;
 	}
 	
+	int middlePoint = 160;
+	int pointValues[320];
 	
+	int start = -160;
+	for (int i = -160; i < 160; i++) {
+		pointValues[i + 160] = i;
+	}	
 
-	return 0;
+	float sum = 0;
+
+	for (int i = 0; i < 320; i++) {
+		int weight = pointValues[i];
+		int color = pixels[i];
+		sum += color * weight;
+	}
+
+	return sum;
 }
