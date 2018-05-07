@@ -12,14 +12,16 @@ int camera_read () {
 	int pixels[8];
 	int temp_array[40];
 	int count = 0;
+	int arrayIndex = 0;
 	for (int i = 0; i < 320; i++){
 		int pixel = get_pixel(120, i, 3);
 		temp_array[count] = pixel;
 		if (count == 40) {
 			count = 0;
 
-			pixels[ ( i / 40 ) - 1 ] = temp_array;
+			pixels[ arrayIndex ] = temp_array;
 			temp_array = [];
+			arrayIndex++;
 		}
 		count++;
 	}
