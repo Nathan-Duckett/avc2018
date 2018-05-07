@@ -26,17 +26,15 @@ int camera_read () {
 	int average = (max - min) / 2;
 	int constantDiff = 30;
 
-	int blackValue = average + constantDiff;
-	int whiteValue = average - constantDiff;
+	int whiteValue = average + constantDiff;
+	int blackValue = average - constantDiff;
 
 	if (average + constantDiff >= 235) {
-		blackValue = 235;
+		whiteValue = 235;
 	}
 	
-	int middlePoint = 160;
 	int pointValues[320];
-	
-	int start = -160;
+
 	for (int i = -160; i < 160; i++) {
 		pointValues[i + 160] = i;
 	}	
@@ -46,6 +44,12 @@ int camera_read () {
 	for (int i = 0; i < 320; i++) {
 		int weight = pointValues[i];
 		int color = pixels[i];
+		if (color > whiteValue) {
+			color = 200;
+		} 
+		if (color < blackValue) {
+			color = 100;
+		}
 		sum += color * weight;
 	}
 
