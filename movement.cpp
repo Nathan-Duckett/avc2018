@@ -1,5 +1,5 @@
 #include "header.h"
-
+int avc_reading;
 /**
  * This file will take the values passed through from the main function
  * and move the robot appropriately.
@@ -78,4 +78,15 @@ void turn_right (int delay) {
 	set_motor(2, 0);
 	return;
 }
+int main(){
+	if(avc_reading<0){
+			turn_left(avc_reading);
+					}
+	else if(avc_reading>0){
+			turn_right(avc_reading);
+			}
+	else{
+			go_straight(avc_reading);
+			}
 
+}
