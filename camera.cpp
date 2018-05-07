@@ -9,18 +9,14 @@ int camera_read () {
 	take_picture();
 	int min = 255;
 	int max = 0;
-	int pixels[8];
-	int temp_array[40];
+	int pixels[8][40];
 	int count = 0;
 	int arrayIndex = 0;
 	for (int i = 0; i < 320; i++){
 		int pixel = get_pixel(120, i, 3);
-		temp_array[count] = pixel;
+		pixels[arrayIndex][count] = pixel;
 		if (count == 40) {
 			count = 0;
-
-			pixels[ arrayIndex ] = temp_array;
-			temp_array = [];
 			arrayIndex++;
 		}
 		count++;
