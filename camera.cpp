@@ -21,13 +21,17 @@ int camera_read () {
 		}
 		count++;
 	}
-
+	arrayIndex = 0;
 	for (int i = 0; i < 320; i++ ) {
-		if (pixels[i] > max) {
-			max = pixels[i];
+		if (pixels[arrayIndex][count] > max) {
+			max = pixels[arrayIndex][count];
 		}
-		if (pixels[i] < min) {
-			min = pixels[i];
+		if (pixels[arrayIndex][count] < min) {
+			min = pixels[arrayIndex][count];
+		}
+		if (count == 40) {
+			count = 0;
+			arrayIndex++;
 		}
 	}
 	int average = (max - min) / 2;
@@ -48,9 +52,10 @@ int camera_read () {
 
 	int sum = 0;
 
+	arrayIndex = 0;
 	for (int i = 0; i < 320; i++) {
 		int weight = pointValues[i];
-		int color = pixels[i];
+		int color = pixels[arrayIndex][count];
 		if (color > whiteValue) {
 			color = 200;
 		} 
@@ -58,6 +63,10 @@ int camera_read () {
 			color = 100;
 		}
 		sum += color * weight;
+		if (count == 40) {
+			count = 0;
+			arrayIndex++;
+		}
 	}
 
 	return sum;
