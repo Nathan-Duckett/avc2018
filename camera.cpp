@@ -29,29 +29,23 @@ int camera_read () {
 	}
 
 	arrayIndex = 0; //Resets the outer array counter to 0
-	
+	int pixelSum = 0;
 	//This loop determines the maximum and minimum values possible from the picture.
 	for (int i = 0; i < 320; i++ ) {
-		if (pixels[arrayIndex][count] > max) {
-			max = pixels[arrayIndex][count];
-		}
-		if (pixels[arrayIndex][count] < min) {
-			min = pixels[arrayIndex][count];
-		}
+		pixelSum += pixels[arrayIndex][count];
 		if (count == 40) {
 			count = 0;
 			arrayIndex++;
 		}
 	}
-	int average = (max - min) / 2; //Calculates the mid-point average between the maximum and minimum values.
-	int constantDiff = 30; //Constant value to be added on to the average for calculating ranges.
+	int average = pixelSum / 320; //Calculates the mid-point average between the maximum and minimum values.
+	int constantDiff = 45; //Constant value to be added on to the average for calculating ranges.
 
 	int whiteValue = average + constantDiff; //White Value minimum value
-	int blackValue = average - constantDiff; //Black Value maximum value
 
 	//Checks if the whiteValue is too high to make sure that the white values are reasonable
-	if (average + constantDiff >= 235) {
-		whiteValue = 235;
+	if (average + constantDiff >= 230) {
+		whiteValue = 230;
 	}
 	
 	int colorValues[8];
@@ -71,10 +65,20 @@ int camera_read () {
 
 	//Sets the section weight values
 	int pointValues[8];
-	for (int i = -4; i < 4; i++) {
-		pointValues[i + 4] = i;
+	for (int i = -4; i < 5; i++) {
+		if (i == 0) { i++; }
+		if (i < 0 && i > -5) {
+			pointValues[i + 4] = i;
+		} else if (i > 0 && i < 5) {
+			pointValues[i + 3] = i;
+		}
 	}
 
+	/*Adds up the sum of the weight * color for each section to get the error value
+	  Postive means line is to right of centre
+	  Negative means line is to the left of centre
+	  Zero means the line is in the centre
+	*/
 	int sum = 0; // Initialize the sum
 	for (int i = 0; i < 8; i++) {
 		int weight = pointValues[i];
