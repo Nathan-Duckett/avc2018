@@ -8,8 +8,8 @@ int main (){
 	init ();
 	
 	while(true) {
-		int results = camera_read();
-		direction_helper();
+		int error = camera_read();
+		direction_helper(error);
 
 	}
 	

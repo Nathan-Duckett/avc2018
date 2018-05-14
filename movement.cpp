@@ -79,7 +79,9 @@ void turn_left_sharp (int delay, double PWM) {
 	return;
 }
 
+
 void turn_left_slope (int delay, double PWM, double turning_distance) {
+
 	int seconds = delay_to_seconds(delay);
 	int microSeconds = delay_to_microseconds(delay);
 
@@ -113,7 +115,9 @@ void turn_right_sharp (int delay, double PWM) {
 	return;
 }
 
+
 void turn_right_slope (int delay, double PWM, double turning_distance) {
+  
 	int seconds = delay_to_seconds(delay);
 	int microSeconds = delay_to_microseconds(delay);
 
@@ -127,4 +131,5 @@ void turn_right_slope (int delay, double PWM, double turning_distance) {
 	set_motor(2, 0);
 	
 	return;
+
 }
