@@ -15,12 +15,13 @@ void open_gate () {
    // everything is working correctly
    init(1);
    //connects to server with the ip address 192.168.1.2
-   connect_to_server("192.168.1.2", 1024); //error converting string to char
+   connect_to_server("130.195.6.196", 1024); //error converting string to char
    //sends a message to the connected server
-   send_to_server("Hello server"); //error converting string to char
+   send_to_server("Please"); //error converting string to char
    //receives message from the connected server
    char message[24];
    receive_from_server(message); //this may be buggy!
    printf("%s", message);
+   send_to_server(message);
 }
 
