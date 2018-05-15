@@ -6,11 +6,16 @@
 
 int main (){
 	init ();
-	
+	int quadrant = 1;
 	while(true) {
-		int error = camera_read();
-		direction_helper(error);
-
+		switch(quadrant) {
+			case 1:
+				open_gate();
+			case 2:
+				int error = camera_read();
+				direction_helper(error);
+				break;
+		}
 	}
 	
 	

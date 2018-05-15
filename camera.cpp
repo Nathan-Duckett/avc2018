@@ -92,3 +92,12 @@ int camera_read () {
 
 	return sum;
 }
+
+int camera_read_quad3 () {
+	int max = 0;
+	int min = 255;
+	
+	take_picture();
+
+	
+}
