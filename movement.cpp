@@ -1,5 +1,9 @@
 #include "header.h"
-
+void go_straight(int delay, double PWM) ;
+void turn_left_sharp (int delay, double PWM);
+void turn_right_sharp (int delay, double PWM);
+void turn_left_slope (int delay, double PWM, double turning_distance);
+void turn_right_slope (int delay, double PWM, double turning_distance);
 /**
  * This file will take the values passed through from the main function
  * and move the robot appropriately.
@@ -75,7 +79,9 @@ void turn_left_sharp (int delay, double PWM) {
 	return;
 }
 
-void turn_left_slope (int delay, double PWM, int turning_distance) {
+
+void turn_left_slope (int delay, double PWM, double turning_distance) {
+
 	int seconds = delay_to_seconds(delay);
 	int microSeconds = delay_to_microseconds(delay);
 
@@ -109,7 +115,9 @@ void turn_right_sharp (int delay, double PWM) {
 	return;
 }
 
-void turn_right_slope (int delay, double PWM, int turning_distance) {
+
+void turn_right_slope (int delay, double PWM, double turning_distance) {
+  
 	int seconds = delay_to_seconds(delay);
 	int microSeconds = delay_to_microseconds(delay);
 
@@ -123,4 +131,5 @@ void turn_right_slope (int delay, double PWM, int turning_distance) {
 	set_motor(2, 0);
 	
 	return;
+
 }
