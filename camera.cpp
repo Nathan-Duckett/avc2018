@@ -13,6 +13,7 @@ int camera_read () {
 	int pixels[8][40]; //Array of the pixels from a line within the image taken.
 	int arrayIndex = 0; //Inner array current position
 	int count = 0; //Outer array current position
+	bool black = false;
 	
 	//Take a picture using the raspberry pi camera
 	take_picture();
@@ -42,7 +43,11 @@ int camera_read () {
 	int constantDiff = 45; //Constant value to be added on to the average for calculating ranges.
 
 	int whiteValue = average + constantDiff; //White Value minimum value
-
+	
+	if (average < 80) {
+		black = true;
+	}
+	
 	//Checks if the whiteValue is too high to make sure that the white values are reasonable
 	if (average + constantDiff >= 230) {
 		whiteValue = 230;
@@ -79,18 +84,22 @@ int camera_read () {
 	  Negative means line is to the left of centre
 	  Zero means the line is in the centre
 	*/
-	int sum = 0; // Initialize the sum
-	for (int i = 0; i < 8; i++) {
-		int weight = pointValues[i];
-		int color = colorValues[i];
-		sum += color * weight;
-		if (count == 40) {
-			count = 0;
-			arrayIndex++;
+	if (black) {
+		return -10000;
+	} else {
+		int sum = 0; // Initialize the sum
+		for (int i = 0; i < 8; i++) {
+			int weight = pointValues[i];
+			int color = colorValues[i];
+			sum += color * weight;
+			if (count == 40) {
+				count = 0;
+				arrayIndex++;
+			}
 		}
-	}
 
-	return sum;
+		return sum;
+	}
 }
 
 int camera_read_quad3 () {
