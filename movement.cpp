@@ -33,11 +33,11 @@ void direction_helper(int error_value) {
 	//Call one of the straight, left, or right methods.
 	if (error_value < -700) {
 		turn_left_sharp(5000, 0.5);
-	} else if (error_value < -200 && error_value > -700) {
+	} else if (error_value < -200 && error_value >= -700) {
 		turn_left_slope(5000, 0.4, 0.2);
-	} else if (error_value > -200 && error_value < 200) {
-		go_straight(5000, 0.5);
-	} else if (error_value > 200 && error_value < 700) {
+	} else if (error_value >= -200 && error_value <= 200) {
+		go_straight(5000, 0.75);
+	} else if (error_value > 200 && error_value <= 700) {
 		turn_right_slope(5000, 0.4, 0.2);
 	} else if (error_value > 700) {
 		turn_right_sharp(5000, 0.5);
