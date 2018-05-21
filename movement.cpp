@@ -32,8 +32,9 @@ int delay_to_microseconds (int delay) {
 /* Take the incoming data and choose which direction the robot should go */
 void direction_helper(int error_value) {
 	//Call one of the straight, left, or right methods.
-	if (error_value < -100000) {
-		turn_left_sharp(5000, 0.5);
+	
+	if (error_value == -100000) {
+		go_back(5000, 0.5);
 	}
 	else if(error_value<-20){
 		turn_left_sharp(5000, 0.5);
@@ -43,7 +44,8 @@ void direction_helper(int error_value) {
 	} 
 	else if (error_value >= -5 && error_value <= 5) {
 		go_straight(5000, 0.75);
-			} 
+			}
+	
 	else if (error_value > 5 && error_value <= 20) {
 		turn_right_slope(5000, 0.4, 0.2);
 	}
