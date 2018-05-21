@@ -52,8 +52,8 @@ void direction_helper(int error_value) {
 		else if(error_value>20){
 		turn_right_sharp(5000, 0.5);
 	}
-	else if (error_value > 100000) {
-		turn_right_sharp(5000, 0.5);
+	else if (error_value == 100000) {
+		
 	}
 	
 }
