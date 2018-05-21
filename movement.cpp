@@ -41,6 +41,7 @@ void direction_helper(int error_value) {
 	} else if (error_value > 400 && error_value <= 1500) {
 		turn_right_slope(5000, 0.4, 0.2);
 	} else if (error_value > 1500) {
+
 		turn_right_sharp(5000, 0.5);
 	}
 }
