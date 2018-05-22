@@ -103,6 +103,7 @@ int camera_read (int image_row) {
 			int color = colorValues[i];
 			sum += color * weight;
 		}
+		printf("Error value: %d\n", sum);
 		fprintf(file,"Error value: %d\n", sum);
 		fclose(file);
 
