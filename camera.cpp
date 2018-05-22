@@ -5,7 +5,7 @@
  * return the valeus to adjust the speed and direction of the robot 
  */
  
-int camera_read () {
+int camera_read (int image_row) {
 
 	// Variable initilization
 	int min = 255; //Stores the minimum recorded value from the image
@@ -20,10 +20,19 @@ int camera_read () {
 	
 	// This Loop will split the image up into the 8 equal sections of 40 pixels each
 	for (int i = 0; i < 320; i++){
-		int pixel = get_pixel(120, i, 3);
+		//Get the pixel from the image
+		int pixel = get_pixel(image_row, i, 3);
+		
+		if (pixel < min) {
+			min = pixel;
+		}
+		if (pixel > max) {
+			max = pixel;
+		}
+
 		pixels[arrayIndex][count] = pixel;
 		if (count == 40) {
-			count = 0; //Reses the inner array counter to 0
+			count = 0; //Resets the inner array counter to 0
 			arrayIndex++;
 		}
 		count++;
@@ -39,18 +48,14 @@ int camera_read () {
 			arrayIndex++;
 		}
 	}
-	int average = pixelSum / 320; //Calculates the mid-point average between the maximum and minimum values.
-	int constantDiff = 45; //Constant value to be added on to the average for calculating ranges.
 
-	int whiteValue = average + constantDiff; //White Value minimum value
+
+	int average = pixelSum / 320; //Calculates the mid-point average between the maximum and minimum values.
+
+	int whiteValue = (max - min) / 2; //White Value minimum value
 	
-	if (average < 80) {
+	if (whiteValue - average < 15) {
 		black = true;
-	}
-	
-	//Checks if the whiteValue is too high to make sure that the white values are reasonable
-	if (average + constantDiff >= 230) {
-		whiteValue = 230;
 	}
 	
 	int colorValues[8];
@@ -59,12 +64,12 @@ int camera_read () {
 		bool white = false;
 		for (int j = 0; j < 40; j++) {
 			if (pixels[i][j] > whiteValue) {
-				colorValues[i] = 200;
+				colorValues[i] = 1;
 				white = true;
 			}
 		}
 		if (!white) {
-			colorValues[i] = 100;
+			colorValues[i] = 0;
 		}
 	}
 
@@ -84,7 +89,12 @@ int camera_read () {
 	  Negative means line is to the left of centre
 	  Zero means the line is in the centre
 	*/
+	FILE *file;
+	file = fopen("data.txt","w");
+	
 	if (black) {
+		fprintf(file,"Image is all black\n");
+		fclose(file);
 		return -10000;
 	} else {
 		int sum = 0; // Initialize the sum
@@ -92,21 +102,11 @@ int camera_read () {
 			int weight = pointValues[i];
 			int color = colorValues[i];
 			sum += color * weight;
-			if (count == 40) {
-				count = 0;
-				arrayIndex++;
-			}
 		}
+		fprintf(file,"Error value: %d\n", sum);
+		fclose(file);
 
 		return sum;
 	}
 }
-
-int camera_read_quad3 () {
-	int max = 0;
-	int min = 255;
-	
-	take_picture();
-
-	
-}
++

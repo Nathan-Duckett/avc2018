@@ -1,7 +1,7 @@
 #include "header.h"
 #include "movement.cpp"
 #include "camera.cpp"
-#include "sensors.cpp"
+//#include "sensors.cpp"
 #include "network.cpp"
 
 int main (){
@@ -11,8 +11,9 @@ int main (){
 		switch(quadrant) {
 			case 1:
 				open_gate();
+				quadrant = 2;
 			case 2:
-				int error = camera_read();
+				int error = camera_read(120);
 				direction_helper(error);
 				break;
 		}
