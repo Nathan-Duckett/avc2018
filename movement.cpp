@@ -36,19 +36,19 @@ void direction_helper(int error_value) {
 		go_back(3000, 0.5);
 	}
 	else if(error_value<-20){
-		turn_left_sharp(5000, 0.5);
+		turn_left_sharp(5000, 0.3);
 	}
 	else if (error_value < -8 && error_value >= -20) {
-		turn_left_slope(5000, 0.4, 0.2);
+		turn_left_slope(5000, 0.3, 0.1);
 	} 
 	else if (error_value >= -8 && error_value <= 8) {
-		go_straight(5000, 0.75);
+		go_straight(5000, 0.5);
 			} 
 	else if (error_value > 8 && error_value <= 20) {
-		turn_right_slope(5000, 0.4, 0.2);
+		turn_right_slope(5000, 0.3, 0.1);
 	}
 		else if(error_value>20){
-		turn_right_sharp(5000, 0.5);
+		turn_right_sharp(5000, 0.3);
 	}
 	else if (error_value == 100000) {
 		
