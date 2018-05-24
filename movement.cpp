@@ -154,8 +154,8 @@ void turn_right_slope (int delay, double PWM, double turning_distance) {
 	
 	double difference = turning_distance * 255;
 	double speed = PWM * 255;
-	set_motor(1, speed);
-	set_motor(2,  speed + difference);
+	set_motor(1, speed + difference);
+	set_motor(2,  speed);
 
 	sleep1 (seconds, microSeconds);
 	
