@@ -215,4 +215,3 @@ int camera_read_vertical(int image_column) {
 		return sum;
 	}
 }
-}
