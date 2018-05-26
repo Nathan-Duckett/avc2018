@@ -10,7 +10,7 @@ int main (){
 	while(true) {
 		switch(quadrant) {
 			case 1:
-				open_gate();
+				//open_gate();
 				quadrant = 2;
 			case 2:
 				int error = camera_read(120);
