@@ -31,29 +31,59 @@ int delay_to_microseconds (int delay) {
 
 /* Take the incoming data and choose which direction the robot should go */
 void direction_helper(int error_value) {
+	
+	// time_t timer;
+	// float new_time  = difftime(time(&timer), previous_time);
+	// float Kp = -0.005;
+	// float Kd = -0.05;
+
+	// float derivative = (error_value - previous_error) / new_time;
+
+	// float dv = error_value * Kp + derivative * Kd;
+
+	// float motor_left = 127 + dv;
+	// float motor_right = 127 - dv;
+
+	// set_motor(1, motor_left);
+	// set_motor(2, motor_right);
+
+
 	//Call one of the straight, left, or right methods.
 	if (error_value == -100000) {
+
 		go_back(3000, 0.5);
-	}
-	else if(error_value<-20){
+
+	} else if (error_value < 35) {
+
 		turn_left_sharp(5000, 0.3);
-	}
-	else if (error_value < -8 && error_value >= -20) {
+
+	} else if(error_value < -20 && error_value >= 35){
+
 		turn_left_slope(5000, 0.3, 0.1);
-	} 
-	else if (error_value >= -8 && error_value <= 8) {
+	
+	} else if (error_value < -10 && error_value >= -20) {
+
+		turn_left_slope(5000, 0.3, 0.05);
+
+	} else if (error_value >= -10 && error_value <= 10) {
+
 		go_straight(5000, 0.5);
-			} 
-	else if (error_value > 8 && error_value <= 20) {
+
+	} else if (error_value > 10 && error_value <= 20) {
+
+		turn_right_slope(5000, 0.3, 0.05);
+
+	} else if (error_value >20 && error_value <= 35) {
+
 		turn_right_slope(5000, 0.3, 0.1);
-	}
-		else if(error_value>20){
+
+	} else if(error_value>35){
+
 		turn_right_sharp(5000, 0.3);
-	}
-	else if (error_value == 100000) {
+	
+	} else if (error_value == 100000) {
 		
 	}
-	
 }
 
 void go_straight(int delay, double PWM) {
@@ -71,7 +101,6 @@ void go_straight(int delay, double PWM) {
 	set_motor(1, 0);
 	set_motor(2, 0);
 
-	return;
 }
 
 void go_back(int delay, double PWM) {
@@ -89,8 +118,8 @@ void go_back(int delay, double PWM) {
 	set_motor(1, 0);
 	set_motor(2, 0);
 
-	return;
 }
+	
 
 
 void turn_left_sharp (int delay, double PWM) {
@@ -118,7 +147,7 @@ void turn_left_slope (int delay, double PWM, double turning_distance) {
 
 	double speed = PWM * 255;
 	double difference = turning_distance * 255;
-	set_motor(1, speed);
+	set_motor(1, speed - difference);
 	set_motor(2, speed + difference);
 
 	sleep1 (seconds, microSeconds);
@@ -155,7 +184,7 @@ void turn_right_slope (int delay, double PWM, double turning_distance) {
 	double difference = turning_distance * 255;
 	double speed = PWM * 255;
 	set_motor(1, speed + difference);
-	set_motor(2,  speed);
+	set_motor(2,  speed - difference);
 
 	sleep1 (seconds, microSeconds);
 	
